@@ -2,7 +2,7 @@ import 'package:ecommerce/api/Api_Manager.dart';
 import 'package:ecommerce/domain/dataSource/auth_online_dataSource.dart';
 import 'package:ecommerce/domain/model/AuthResultDto.dart';
 import 'package:injectable/injectable.dart';
-@injectable
+@Injectable(as: AuthOnlineDataSource)
 class AuthOnlineDataSourceImpl implements AuthOnlineDataSource {
   // extend -> class
   // implement -> interfaces

@@ -7,26 +7,22 @@ import 'package:ecommerce/domain/dataSource/auth_online_dataSource.dart';
 import 'package:ecommerce/domain/model/AuthResultDto.dart';
 import 'package:ecommerce/domain/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../domain/usecase/register_usecase.dart';
 
+@injectable
 class RegisterViewModel extends Cubit<RegisterViewState> {
-  late ApiManager apiManager;
-  late AuthOnlineDataSource onlineDataSource;
-  late AuthRepository authRepository;// i can not make object from the abstract so i used impl
-  late RegisterUseCase registerUseCase;
-  RegisterViewModel() : super(InitialState()){
-    apiManager = ApiManager();
-    onlineDataSource = AuthOnlineDataSourceImpl(apiManager);
-    authRepository = AuthRepositoryImpl(onlineDataSource);
-    registerUseCase = RegisterUseCase(authRepository);
-  }
+  RegisterUseCase registerUseCase;
+
+  RegisterViewModel(this.registerUseCase) : super(InitialState());
+
   void register(String name, String email, String phone, String password,
       String repassword) async {
     emit(LoadingState(loadingMessage: "Loading...."));
     try {
-      var response =
-          await registerUseCase.invoke(name, email, phone, password, repassword);
+      var response = await registerUseCase.invoke(
+          name, email, phone, password, repassword);
       // if (!response.isSuccess()) {
       //   emit(FailState(message: response.getErrorMessage()));
       //   return;

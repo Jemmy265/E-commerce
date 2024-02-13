@@ -9,24 +9,24 @@ import 'package:ecommerce/domain/model/CategoryResultDto.dart';
 import 'package:ecommerce/domain/repository/categories_repository.dart';
 import 'package:ecommerce/domain/usecase/GetCategoriesUseCase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../../di/di.dart';
+
+@injectable
 class HomeTabViewModel extends Cubit<HomeTabViewState> {
-  late GetCategoriesUseCase useCase;
+  GetCategoriesUseCase useCase;
 
-  HomeTabViewModel():super(InitialState()){
-    ApiManager apiManager = ApiManager();
-    CategoriesOnlineDataSource dataSource = CategoriesOnlineDataSourceImpl(apiManager);
-    CategoriesRepository repository = CategoriesRepositoryImpl(dataSource);
-    useCase = GetCategoriesUseCase(repository);
-  }
+  HomeTabViewModel(this.useCase) : super(InitialState());
   CategoryResultDto? _categoryResultDto;
-  void getAllCategories() async{
+
+  void getAllCategories() async {
     emit(LoadingState());
     try {
       var result = await useCase.invoke();
       _categoryResultDto = result;
       emit(SuccessState(result.categoriesList!));
-    }on ServerError catch (ex) {
+    } on ServerError catch (ex) {
       emit(FailState(message: ex.errorMessage, exception: ex));
     } on NetworkException catch (ex) {
       emit(FailState(

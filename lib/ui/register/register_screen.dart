@@ -1,3 +1,4 @@
+import 'package:ecommerce/di/di.dart';
 import 'package:ecommerce/provider/auth_provider.dart';
 import 'package:ecommerce/ui/components/custom_form_field.dart';
 import 'package:ecommerce/ui/home/home_screen.dart';
@@ -21,12 +22,12 @@ class RegisterScreen extends StatelessWidget {
 
   var passwordconfirmationcontroller = TextEditingController();
 
-  var viewModel = RegisterViewModel();
+  var registerViewModel = getIt<RegisterViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterViewModel, RegisterViewState>(
-        bloc: viewModel,
+        bloc: registerViewModel,
         listenWhen: (previous, current) {
           if (previous is LoadingState) {
             dialogs.hidedialog(context);
@@ -160,7 +161,8 @@ class RegisterScreen extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 12)),
                               child: Text(
                                 "Register",
-                                style: TextStyle(fontSize: 24),
+                                style: TextStyle(
+                                    fontSize: 24, color: Colors.white),
                               )),
                           TextButton(
                             onPressed: () {
@@ -187,7 +189,7 @@ class RegisterScreen extends StatelessWidget {
     if (formKey.currentState?.validate() == false) {
       return;
     }
-    viewModel.register(
+    registerViewModel.register(
         namecontroller.text,
         emailcontroller.text,
         mobilecontroller.text,

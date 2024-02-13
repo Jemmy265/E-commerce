@@ -1,3 +1,4 @@
+import 'package:ecommerce/di/di.dart';
 import 'package:ecommerce/provider/auth_provider.dart';
 import 'package:ecommerce/ui/components/custom_form_field.dart';
 import 'package:ecommerce/ui/home/home_screen.dart';
@@ -16,11 +17,12 @@ class LoginScreen extends StatelessWidget {
 
   var passwordcontroller = TextEditingController(text: "jemmy6");
 
-  var viewModel = LoginViewModel();
+  LoginViewModel loginViewModel = getIt<LoginViewModel>();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginViewModel, LoginViewState>(
-      bloc: viewModel,
+      bloc: loginViewModel,
       listenWhen: (previous, current) {
         if (previous is LoadingState) {
           dialogs.hidedialog(context);
@@ -126,7 +128,8 @@ class LoginScreen extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(vertical: 12)),
                             child: Text(
                               "Login",
-                              style: TextStyle(fontSize: 24),
+                              style:
+                                  TextStyle(fontSize: 24, color: Colors.white),
                             )),
                         TextButton(
                           onPressed: () {
@@ -154,6 +157,6 @@ class LoginScreen extends StatelessWidget {
     if (formKey.currentState?.validate() == false) {
       return;
     }
-    viewModel.login(emailcontroller.text, passwordcontroller.text);
+    loginViewModel.login(emailcontroller.text, passwordcontroller.text);
   }
 }

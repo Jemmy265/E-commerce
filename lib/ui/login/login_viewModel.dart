@@ -7,22 +7,16 @@ import 'package:ecommerce/domain/model/AuthResultDto.dart';
 import 'package:ecommerce/domain/repository/auth_repository.dart';
 import 'package:ecommerce/domain/usecase/login_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../domain/customException/NetworkException.dart';
 
+@injectable
 class LoginViewModel extends Cubit<LoginViewState> {
-  late ApiManager apiManager;
-  late AuthOnlineDataSource onlineDataSource;
-  late AuthRepository authRepository;
-  late LoginUseCase loginUseCase;
+  LoginUseCase loginUseCase;
 
-  LoginViewModel() : super(InitialState()) {
-    apiManager = ApiManager();
-    onlineDataSource = AuthOnlineDataSourceImpl(apiManager);
-    authRepository = AuthRepositoryImpl(
-        onlineDataSource); // i can not make object from the abstract so i used impl
-    loginUseCase = LoginUseCase(authRepository);
-  }
+  LoginViewModel(this.loginUseCase) : super(InitialState());
+
   void login(String email, String password) async {
     emit(LoadingState(loadingMessage: "Loading...."));
     try {
