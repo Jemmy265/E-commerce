@@ -4,12 +4,15 @@ import 'dart:io';
 
 import 'package:ecommerce/api/Request/LoginRequest.dart';
 import 'package:ecommerce/api/Request/RegisterRequest.dart';
+import 'package:ecommerce/api/Response/Brands/BrandsResponse.dart';
 import 'package:ecommerce/api/Response/Login/LoginResponse.dart';
+import 'package:ecommerce/api/Response/Products/ProductsResponse.dart';
 import 'package:ecommerce/api/Response/categories/CategoriesResponse.dart';
 import 'package:ecommerce/api/Response/register/RegisterResponse.dart';
 import 'package:ecommerce/api/interceptor/Logging_Interceptor.dart';
 import 'package:ecommerce/domain/customException/NetworkException.dart';
 import 'package:ecommerce/domain/customException/ServerError.dart';
+import 'package:ecommerce/domain/repository/product_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:injectable/injectable.dart';
@@ -72,10 +75,38 @@ class ApiManager {
     if(CategorySlug!=null){
       params['keyword'] = CategorySlug;
     }
-    var url = Uri.https(baseUrl, "/api/v1/categories",params );
+    var url = Uri.https(baseUrl, "/api/v1/categories", params);
     try {
       var response = await client.get(url);
       return CategoriesResponse.fromJson(jsonDecode(response.body));
+    } on TimeoutException catch (e) {
+      throw NetworkException("TimeOut : Please check internet connection");
+    } on HttpException catch (e) {
+      throw NetworkException("Http exception : Couldn't reach Server");
+    }
+  }
+
+  Future<BrandsResponse> getBrands() async {
+    var url = Uri.https(baseUrl, "/api/v1/brands");
+    try {
+      var response = await client.get(url);
+      return BrandsResponse.fromJson(jsonDecode(response.body));
+    } on TimeoutException catch (e) {
+      throw NetworkException("TimeOut : Please check internet connection");
+    } on HttpException catch (e) {
+      throw NetworkException("Http exception : Couldn't reach Server");
+    }
+  }
+
+  Future<ProductsResponse> getProducts({ProductSort? sort}) async {
+    var params = {};
+    if (sort != null) {
+      params['sort'] = sort.value;
+    }
+    var url = Uri.https(baseUrl, "/api/v1/products");
+    try {
+      var response = await client.get(url);
+      return ProductsResponse.fromJson(jsonDecode(response.body));
     } on TimeoutException catch (e) {
       throw NetworkException("TimeOut : Please check internet connection");
     } on HttpException catch (e) {

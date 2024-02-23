@@ -1,6 +1,6 @@
+import 'package:ecommerce/api/Response/PaginationEntity.dart';
 import 'package:ecommerce/domain/model/CategoryResultDto.dart';
 
-import 'PaginationEntity.dart';
 import 'CategoryEntity.dart';
 
 /// results : 10
@@ -9,9 +9,9 @@ import 'CategoryEntity.dart';
 
 class CategoriesResponse {
   CategoriesResponse({
-      this.results, 
-      this.pagination,
-      this.data,});
+    this.results,
+    this.pagination,
+    this.data,});
 
   CategoriesResponse.fromJson(dynamic json) {
     results = json['results'];
@@ -23,6 +23,7 @@ class CategoriesResponse {
       });
     }
   }
+
   int? results;
   PaginationEntity? pagination;
   List<CategoryEntity>? data;

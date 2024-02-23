@@ -7,32 +7,14 @@ class CategoriesSection extends StatelessWidget {
   CategoriesSection(this.categories);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text("Categories"),
-            TextButton(onPressed: () {}, child: Text("View all")),
-          ],
-        ),
-        Row(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.5,
-              child: GridView.builder(
-                scrollDirection: Axis.horizontal,
-                gridDelegate:
-                    SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  return HomeCategoryItem(categories[index]);
-                },
-                itemCount: categories.length??0,
-              ),
-            ),
-          ],
-        )
-      ],
+    return GridView.builder(
+      scrollDirection: Axis.horizontal,
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemBuilder: (context, index) {
+        return HomeCategoryItem(categories[index]);
+      },
+      itemCount: categories.length ?? 0,
     );
   }
 }

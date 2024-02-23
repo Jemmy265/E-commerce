@@ -26,36 +26,35 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.transparent,
-        ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0
-        ),
-        primaryColor: MyTheme.primaryColor,
-        textTheme: const TextTheme(
-          labelLarge: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            color: MyTheme.primaryColor,
+          useMaterial3: true,
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Colors.transparent,
           ),
-          labelMedium: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-            color: MyTheme.primaryColor,
-          ),
-          labelSmall: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: MyTheme.primaryColor,
-          ),
-          bodyMedium: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: MyTheme.primaryColor,
+          appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent, elevation: 0),
+          primaryColor: MyTheme.primaryColor,
+          textTheme: const TextTheme(
+              labelLarge: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                color: MyTheme.primaryColor,
+              ),
+              labelMedium: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: MyTheme.primaryColor,
+              ),
+              labelSmall: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: MyTheme.primaryColor,
+              ),
+              bodyMedium: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: MyTheme.primaryColor,
+              )
           )
-        )
       ),
       routes: {
         RegisterScreen.routeName : (context) => RegisterScreen(),
